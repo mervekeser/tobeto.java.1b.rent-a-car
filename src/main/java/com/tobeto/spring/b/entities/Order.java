@@ -1,12 +1,19 @@
 package com.tobeto.spring.b.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +36,7 @@ public class Order {
     private String paymentType;
 
     @OneToMany(mappedBy = "order")
+    @JsonIgnore
     private List<Car> cars;
 
     @ManyToOne
