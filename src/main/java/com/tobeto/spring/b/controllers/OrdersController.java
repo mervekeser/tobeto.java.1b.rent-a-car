@@ -2,6 +2,12 @@ package com.tobeto.spring.b.controllers;
 
 import com.tobeto.spring.b.entities.Order;
 import com.tobeto.spring.b.repositories.OrderRepository;
+import com.tobeto.spring.b.services.abstracts.OrderService;
+import com.tobeto.spring.b.services.dtos.requests.order.AddOrderRequest;
+import com.tobeto.spring.b.services.dtos.requests.order.UpdateOrderRequest;
+import com.tobeto.spring.b.services.dtos.responses.order.GetOrderListResponse;
+import com.tobeto.spring.b.services.dtos.responses.order.GetOrderResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,43 +15,32 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/orders")
+@AllArgsConstructor
 public class OrdersController {
-    private final OrderRepository orderRepository;
-
-    public OrdersController(OrderRepository orderRepository){
-        this.orderRepository = orderRepository;
-    }
+    private final OrderService orderService;
 
     @GetMapping
-    public List<Order> getAll(){
-        return orderRepository.findAll();
+    public List<GetOrderListResponse> getAll(){
+        return this.orderService.getAll();
     }
 
     @GetMapping({"id"})
-    public Order getById(@PathVariable int id){
-        return orderRepository.findById(id).orElseThrow();
+    public GetOrderResponse getById(@PathVariable int id){
+        return this.orderService.getById(id);
     }
 
     @PostMapping
-    public void add(@RequestBody Order order){
-        orderRepository.save(order);
+    public void add(@RequestBody AddOrderRequest addOrderRequest){
+        this.orderService.add(addOrderRequest);
     }
 
     @PutMapping({"id"})
-    public void update(@PathVariable int id, @RequestBody Order order){
-        Order orderToUpdate = orderRepository.findById(id).orElseThrow();
-        orderToUpdate.setId(order.getId());
-        orderToUpdate.setDate(order.getDate());
-        orderToUpdate.setStartRent(order.getStartRent());
-        orderToUpdate.setEndRent(order.getEndRent());
-        orderToUpdate.setTotalPrice(order.getTotalPrice());
-        orderToUpdate.setPaymentType(order.getPaymentType());
-        orderRepository.save(orderToUpdate);
+    public void update(@PathVariable int id, @RequestBody UpdateOrderRequest updateOrderRequest){
+        this.orderService.update(updateOrderRequest, id);
     }
 
     @DeleteMapping({"id"})
     public void delete(@PathVariable int id){
-        Order orderToDelete = orderRepository.findById(id).orElseThrow();
-        orderRepository.delete(orderToDelete);
+        this.orderService.deleteById(id);
     }
 }

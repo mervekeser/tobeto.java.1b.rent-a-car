@@ -1,72 +1,46 @@
 package com.tobeto.spring.b.controllers;
 
-import com.tobeto.spring.b.dtos.requests.address.AddAddressRequest;
-import com.tobeto.spring.b.dtos.requests.address.UpdateAddressRequest;
-import com.tobeto.spring.b.dtos.responses.address.GetAddressListResponse;
-import com.tobeto.spring.b.dtos.responses.address.GetAddressResponse;
+import com.tobeto.spring.b.services.abstracts.AddressService;
+import com.tobeto.spring.b.services.dtos.requests.address.AddAddressRequest;
+import com.tobeto.spring.b.services.dtos.requests.address.UpdateAddressRequest;
+import com.tobeto.spring.b.services.dtos.responses.address.GetAddressListResponse;
+import com.tobeto.spring.b.services.dtos.responses.address.GetAddressResponse;
 import com.tobeto.spring.b.entities.Address;
 import com.tobeto.spring.b.repositories.AddressRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/addresses")
+@AllArgsConstructor
 public class AddressesController {
-    private final AddressRepository addressRepository;
-    public AddressesController(AddressRepository addressRepository){
-        this.addressRepository = addressRepository;
-    }
+    private final AddressService addressService;
 
     @GetMapping
     public List<GetAddressListResponse> getAll(){
-        List<Address> addressList = addressRepository.findAll();
-        List<GetAddressListResponse> addressListResponses = new ArrayList<GetAddressListResponse>();
-        for(Address address : addressList){
-            GetAddressListResponse addressListResponse = new GetAddressListResponse();
-            addressListResponse.setPostalCode(address.getPostalCode());
-            addressListResponse.setAddressText(address.getAddressText());
-
-            addressListResponses.add(addressListResponse);
-        }
-        return addressListResponses;
+        return this.addressService.getAll();
     }
 
     @GetMapping({"id"})
     public GetAddressResponse getById(@PathVariable int id){
-        Address address = addressRepository.findById(id).orElseThrow();
-
-        GetAddressResponse dto = new GetAddressResponse();
-        dto.setPostalCode(address.getPostalCode());
-        dto.setAddressText(address.getAddressText());
-
-        return dto;
+        return this.addressService.getById(id);
     }
 
     @PostMapping
     public void add(@RequestBody AddAddressRequest addressRequest){
-        Address address = new Address();
-
-        address.setPostalCode(addressRequest.getPostalCode());
-        address.setAddressText(address.getAddressText());
-
-        addressRepository.save(address);
+         this.addressService.add(addressRequest);
     }
 
     @PutMapping("{id}")
     public void update(@PathVariable int id, @RequestBody UpdateAddressRequest updateAddressRequest){
-        Address addressToUpdate = addressRepository.findById(id).orElseThrow();
-
-        addressToUpdate.setPostalCode(updateAddressRequest.getPostalCode());
-        addressToUpdate.setAddressText(updateAddressRequest.getAddressText());
-        addressRepository.save(addressToUpdate);
+        this.addressService.update(updateAddressRequest, id);
     }
 
     @DeleteMapping({"id"})
     public void delete(@PathVariable int id){
-        Address addressToDelete = addressRepository.findById(id).orElseThrow();
-        addressRepository.delete(addressToDelete);
+        this.addressService.delete(id);
     }
 }
