@@ -10,7 +10,8 @@ import java.util.List;
 public interface CityService {
     void add(AddCityRequest addCityRequest);
     void update(UpdateCityRequest updateCityRequest, int id);
+    void delete(int id);
     List<GetCityListResponse> getAll();
     GetCityResponse getById(int id);
-    void delete(int id);
+    List<GetCityListResponse> getByAll();
 }

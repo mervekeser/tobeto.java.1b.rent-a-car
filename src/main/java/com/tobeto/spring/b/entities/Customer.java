@@ -36,9 +36,6 @@ public class Customer {
     @JsonIgnore
     private List<Order> orders;
 
-  /*  @ManyToMany(mappedBy = "customers")
-    private List<Address> addresses; */
-
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Bill> bills;

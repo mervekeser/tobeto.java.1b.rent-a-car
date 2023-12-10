@@ -12,6 +12,7 @@ import com.tobeto.spring.b.services.dtos.responses.order.GetOrderResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,34 +20,6 @@ import java.util.List;
 @Service
 public class OrderManager implements OrderService {
     private final OrderRepository orderRepository;
-
-    @Override
-    public List<GetOrderListResponse> getAll() {
-        List<Order> orderList = orderRepository.findAll();
-        List<GetOrderListResponse> getOrderListResponses = new ArrayList<>();
-        for(Order order : orderList){
-            GetOrderListResponse getOrderResponse = new GetOrderListResponse();
-            getOrderResponse.setDate(order.getDate());
-            getOrderResponse.setStartRent(order.getStartRent());
-            getOrderResponse.setEndRent(order.getEndRent());
-            getOrderResponse.setPaymentType(order.getPaymentType());
-            getOrderResponse.setTotalPrice(order.getTotalPrice());
-
-            getOrderListResponses.add(getOrderResponse);
-        }
-
-        return getOrderListResponses;
-    }
-
-    @Override
-    public GetOrderResponse getById(int id) {
-        Order order = orderRepository.findById(id).orElseThrow();
-        GetOrderResponse getOrderResponse = new GetOrderResponse();
-        getOrderResponse.setDate(order.getDate());
-
-        return getOrderResponse;
-
-    }
 
     @Override
     public void add(AddOrderRequest addOrderRequest) {
@@ -79,4 +52,38 @@ public class OrderManager implements OrderService {
     public void deleteById(int id) {
         orderRepository.deleteById(id);
     }
+
+    @Override
+    public List<GetOrderListResponse> getAll() {
+        List<Order> orderList = orderRepository.findAll();
+        List<GetOrderListResponse> getOrderListResponses = new ArrayList<>();
+        for(Order order : orderList){
+            GetOrderListResponse getOrderResponse = new GetOrderListResponse();
+            getOrderResponse.setDate(order.getDate());
+            getOrderResponse.setStartRent(order.getStartRent());
+            getOrderResponse.setEndRent(order.getEndRent());
+            getOrderResponse.setPaymentType(order.getPaymentType());
+            getOrderResponse.setTotalPrice(order.getTotalPrice());
+
+            getOrderListResponses.add(getOrderResponse);
+        }
+
+        return getOrderListResponses;
+    }
+
+    @Override
+    public GetOrderResponse getById(int id) {
+        Order order = orderRepository.findById(id).orElseThrow();
+        GetOrderResponse getOrderResponse = new GetOrderResponse();
+        getOrderResponse.setDate(order.getDate());
+
+        return getOrderResponse;
+
+    }
+
+    @Override
+    public List<GetOrderListResponse> getByStartRentAndEndRent(LocalDate start, LocalDate end) {
+        return orderRepository.findByStartRentAndEndRent(start, end);
+    }
+
 }

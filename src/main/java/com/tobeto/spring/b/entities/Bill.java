@@ -27,9 +27,6 @@ public class Bill {
     @Column(name = "price")
     private double price;
 
-   /* @OneToOne(mappedBy = "bill")
-    private Order order; */
-
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;

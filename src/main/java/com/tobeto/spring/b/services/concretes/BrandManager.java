@@ -22,6 +22,13 @@ public class BrandManager implements BrandService {
 
     @Override
     public void add(AddBrandRequest addBrandRequest) {
+        // Aynı isimde iki brand olamaz
+
+        if(brandRepository.existsByName(addBrandRequest.getName().trim()))
+        {
+            throw new RuntimeException("Aynı isimle iki marka eklenemez.");
+        }
+
         Brand brand = new Brand();
         brand.setName(addBrandRequest.getName());
 
@@ -41,16 +48,22 @@ public class BrandManager implements BrandService {
         }
 
     @Override
-    public List<GetBrandListResponse> getAll() {
-        List<Brand> brandList = brandRepository.findAll();
+    public List<GetBrandListResponse> getByName(String name, int id) {
+        List<Brand> brandList = brandRepository.findByNameLikeOrIdEquals("%"+name+"%", id);
         List<GetBrandListResponse> getBrandListResponses = new ArrayList<>();
         for(Brand brand : brandList){
-            GetBrandListResponse getBrandResponse = new GetBrandListResponse();
-            getBrandResponse.setName(brand.getName());
-
-            getBrandListResponses.add(getBrandResponse);
+            getBrandListResponses.add(new GetBrandListResponse(brand.getName()));
         }
         return getBrandListResponses;
+    }
+    @Override
+    public List<GetBrandListResponse> search(String name){
+        List<Brand> brands = brandRepository.search2(name);
+
+        // MAP
+        // Lambda Expression & Stream API
+
+        return brandRepository.search3(name);
     }
 
     @Override
@@ -63,7 +76,7 @@ public class BrandManager implements BrandService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id){
         brandRepository.deleteById(id);
     }
 

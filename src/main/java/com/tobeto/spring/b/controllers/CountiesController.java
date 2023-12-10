@@ -19,19 +19,9 @@ import java.util.List;
 public class CountiesController {
     private final CountyService countyService;
 
-    @GetMapping
-    public List<GetCountyListReponse> getAll(){
-        return this.countyService.getAll();
-    }
-
-    @GetMapping({"id"})
-    public GetCountyResponse getById(@PathVariable int id){
-        return this.countyService.getById(id);
-    }
-
     @PostMapping
     public void add(@RequestBody AddCountyRequest addCountyRequest){
-       this.countyService.add(addCountyRequest);
+        this.countyService.add(addCountyRequest);
     }
 
     @PutMapping({"id"})
@@ -43,4 +33,16 @@ public class CountiesController {
     public void delete(@PathVariable int id){
         this.countyService.delete(id);
     }
+
+    @GetMapping
+    public List<GetCountyListReponse> getAll(){
+        return this.countyService.getAll();
+    }
+
+    @GetMapping({"id"})
+    public GetCountyResponse getById(@PathVariable int id){
+        return this.countyService.getById(id);
+    }
+
+
 }

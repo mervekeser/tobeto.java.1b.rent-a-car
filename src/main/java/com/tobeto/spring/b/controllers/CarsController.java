@@ -17,20 +17,7 @@ import java.util.List;
 @RequestMapping("api/cars")
 @AllArgsConstructor
 public class CarsController {
-
     private final CarService carService;
-
-
-
-    @GetMapping
-    public List<GetCarListResponse> getAll(){
-        return this.carService.getAll();
-    }
-
-    @GetMapping({"id"})
-    public GetCarResponse getById(@PathVariable int id){
-        return this.carService.getById(id);
-    }
 
     @PostMapping
     public void add(@RequestBody AddCarRequest addCarRequest){
@@ -46,4 +33,21 @@ public class CarsController {
     public void delete(@PathVariable int id){
         this.carService.delete(id);
     }
+
+    @GetMapping
+    public List<GetCarListResponse> getAll(){
+        return this.carService.getAll();
+    }
+
+    @GetMapping({"id"})
+    public GetCarResponse getById(@PathVariable int id){
+        return this.carService.getById(id);
+    }
+
+    @GetMapping({"modelName"})
+    public List<GetCarListResponse> getByModelName(@RequestParam String modelName){
+        return this.carService.getByModelName(modelName);
+    }
+
+
 }

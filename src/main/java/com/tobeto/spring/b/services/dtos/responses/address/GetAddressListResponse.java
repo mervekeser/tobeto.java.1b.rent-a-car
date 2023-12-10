@@ -1,12 +1,15 @@
 package com.tobeto.spring.b.services.dtos.responses.address;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.tobeto.spring.b.entities.Address;
+import lombok.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class GetAddressListResponse {
     private String postalCode;
 

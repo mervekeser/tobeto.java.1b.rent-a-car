@@ -18,30 +18,6 @@ public class CountyManager implements CountyService {
     private final CountyRepository countyRepository;
 
     @Override
-    public List<GetCountyListReponse> getAll() {
-
-            List<County> countyList = countyRepository.findAll();
-            List<GetCountyListReponse> countyListReponses = new ArrayList<GetCountyListReponse>();
-            for (County county : countyList){
-                GetCountyListReponse countyListReponse = new GetCountyListReponse();
-                countyListReponse.setName(county.getName());
-
-                countyListReponses.add(countyListReponse);
-            }
-            return countyListReponses;
-    }
-
-    @Override
-    public GetCountyResponse getById(int id) {
-        County county = countyRepository.findById(id).orElseThrow();
-
-        GetCountyResponse getCountyResponse = new GetCountyResponse();
-        getCountyResponse.setName(county.getName());
-
-        return getCountyResponse;
-    }
-
-    @Override
     public void add(AddCountyRequest addCountyRequest) {
         County county = new County();
 
@@ -65,4 +41,30 @@ public class CountyManager implements CountyService {
 
         countyRepository.deleteById(id);
     }
+
+    @Override
+    public List<GetCountyListReponse> getAll() {
+
+            List<County> countyList = countyRepository.findAll();
+            List<GetCountyListReponse> countyListReponses = new ArrayList<GetCountyListReponse>();
+            for (County county : countyList){
+                GetCountyListReponse countyListReponse = new GetCountyListReponse();
+                countyListReponse.setName(county.getName());
+
+                countyListReponses.add(countyListReponse);
+            }
+            return countyListReponses;
+    }
+
+    @Override
+    public GetCountyResponse getById(int id) {
+        County county = countyRepository.findById(id).orElseThrow();
+
+        GetCountyResponse getCountyResponse = new GetCountyResponse();
+        getCountyResponse.setName(county.getName());
+
+        return getCountyResponse;
+    }
+
+
 }

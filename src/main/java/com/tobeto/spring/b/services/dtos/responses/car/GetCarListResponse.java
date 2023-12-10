@@ -1,5 +1,6 @@
 package com.tobeto.spring.b.services.dtos.responses.car;
 
+import com.tobeto.spring.b.services.dtos.responses.brand.GetBrandListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,6 @@ public class GetCarListResponse {
     private String color;
 
     private double price;
+
+    private GetBrandListResponse brand;
 }

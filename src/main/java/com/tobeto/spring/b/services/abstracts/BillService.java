@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface BillService {
     void add(AddBillRequest addBillRequest);
-    List<GetBillListResponse> getAll();
-    GetBillResponse getById(int id);
     void update(UpdateBillRequest updateBillRequest, int id);
     void delete(int id);
+    List<GetBillListResponse> getAll();
+    GetBillResponse getById(int id);
+    List<GetBillListResponse> getByPriceLessThanEqual(double price);
 }

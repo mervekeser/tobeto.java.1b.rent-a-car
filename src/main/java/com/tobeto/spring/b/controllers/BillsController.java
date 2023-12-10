@@ -19,17 +19,6 @@ import java.util.List;
 public class BillsController {
     private final BillService billService;
 
-
-
-    @GetMapping
-    public List<GetBillListResponse> getAll(){
-        return this.billService.getAll();
-    }
-
-    @GetMapping({"id"})
-    public GetBillResponse getById(@PathVariable int id){
-        return this.billService.getById(id);
-    }
     @PostMapping
     public void add(@RequestBody AddBillRequest addBillRequest){
         this.billService.add(addBillRequest);
@@ -43,5 +32,20 @@ public class BillsController {
     @DeleteMapping({"id"})
     public void delete(@PathVariable int id){
         this.billService.delete(id);
+    }
+
+    @GetMapping
+    public List<GetBillListResponse> getAll(){
+        return this.billService.getAll();
+    }
+
+    @GetMapping({"id"})
+    public GetBillResponse getById(@PathVariable int id){
+        return this.billService.getById(id);
+    }
+
+    @GetMapping({"price"})
+    public List<GetBillListResponse> getByPriceLessThanEqual(double price){
+        return this.billService.getByPriceLessThanEqual(price);
     }
 }

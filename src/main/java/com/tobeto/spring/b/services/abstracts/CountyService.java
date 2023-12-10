@@ -8,9 +8,9 @@ import com.tobeto.spring.b.services.dtos.responses.county.GetCountyResponse;
 import java.util.List;
 
 public interface CountyService {
-    List<GetCountyListReponse> getAll();
-    GetCountyResponse getById(int id);
     void add(AddCountyRequest addCountyRequest);
     void update(UpdateCountyRequest updateCountyRequest, int id);
     void delete(int id);
+    List<GetCountyListReponse> getAll();
+    GetCountyResponse getById(int id);
 }

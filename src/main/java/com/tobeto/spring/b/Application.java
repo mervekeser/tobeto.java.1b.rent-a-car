@@ -15,7 +15,6 @@ public class Application {
 	public static void main(String[] args) {
 		// springi devreye alır
 		SpringApplication.run(Application.class, args);
-
 	}
 
 }

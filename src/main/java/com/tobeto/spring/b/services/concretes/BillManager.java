@@ -56,6 +56,11 @@ public class BillManager implements BillService {
     }
 
     @Override
+    public List<GetBillListResponse> getByPriceLessThanEqual(double price) {
+        return billRepository.findByPriceLessThanEqual(price);
+    }
+
+    @Override
     public void update(UpdateBillRequest updateBillRequest, int id) {
         Bill billToUpdate = billRepository.findById(id).orElseThrow();
 

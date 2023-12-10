@@ -9,8 +9,11 @@ import java.util.List;
 
 public interface AddressService {
     void add(AddAddressRequest addAddressRequest);
-    List<GetAddressListResponse> getAll();
-    GetAddressResponse getById(int id);
     void update(UpdateAddressRequest updateAddressRequest, int id);
     void delete(int id);
+    List<GetAddressListResponse> getAll();
+    GetAddressResponse getById(int id);
+
+    GetAddressListResponse search(String addressText);
+
 }

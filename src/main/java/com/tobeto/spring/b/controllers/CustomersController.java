@@ -21,17 +21,6 @@ import java.util.List;
 public class CustomersController {
     private final CustomerService customerService;
 
-
-    @GetMapping
-    public List<GetCustomerListResponse> getAll(){
-        return this.customerService.getAll();
-    }
-
-    @GetMapping({"id"})
-    public GetCustomerResponse getById(@PathVariable int id){
-       return this.customerService.getbyId(id);
-    }
-
     @PostMapping
     public void add(@RequestBody AddCustomerRequest addCustomerRequest){
         this.customerService.add(addCustomerRequest);
@@ -45,5 +34,20 @@ public class CustomersController {
     @DeleteMapping({"id"})
     public void delete(@PathVariable int id){
         this.customerService.delete(id);
+    }
+
+    @GetMapping
+    public List<GetCustomerListResponse> getAll(){
+        return this.customerService.getAll();
+    }
+
+    @GetMapping({"id"})
+    public GetCustomerResponse getById(@PathVariable int id){
+       return this.customerService.getbyId(id);
+    }
+
+    @GetMapping({"identityNumber"})
+    public List<GetCustomerListResponse> getByIdentityNumber(@RequestParam String identityNumber){
+        return customerService.getByIdentityNumber(identityNumber);
     }
 }

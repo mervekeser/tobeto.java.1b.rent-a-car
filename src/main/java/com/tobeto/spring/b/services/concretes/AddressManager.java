@@ -10,13 +10,13 @@ import com.tobeto.spring.b.services.dtos.responses.address.GetAddressResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class AddressManager implements AddressService {
     private final AddressRepository addressRepository;
+
 
     @Override
     public void add(AddAddressRequest addressRequest) {
@@ -26,31 +26,6 @@ public class AddressManager implements AddressService {
         address.setAddressText(address.getAddressText());
 
         addressRepository.save(address);
-    }
-
-    @Override
-    public List<GetAddressListResponse> getAll() {
-        List<Address> addressList = addressRepository.findAll();
-        List<GetAddressListResponse> addressListResponses = new ArrayList<GetAddressListResponse>();
-        for(Address address : addressList){
-            GetAddressListResponse addressListResponse = new GetAddressListResponse();
-            addressListResponse.setPostalCode(address.getPostalCode());
-            addressListResponse.setAddressText(address.getAddressText());
-
-            addressListResponses.add(addressListResponse);
-        }
-        return addressListResponses;
-    }
-
-    @Override
-    public GetAddressResponse getById(int id) {
-        Address address = addressRepository.findById(id).orElseThrow();
-
-        GetAddressResponse getAddressResponse = new GetAddressResponse();
-        getAddressResponse.setPostalCode(address.getPostalCode());
-        getAddressResponse.setAddressText(address.getAddressText());
-
-        return getAddressResponse;
     }
 
     @Override
@@ -66,4 +41,31 @@ public class AddressManager implements AddressService {
     public void delete(int id) {
         addressRepository.deleteById(id);
     }
+
+    @Override
+    public List<GetAddressListResponse> getAll() {
+        List<Address> addressList = addressRepository.findAll();
+        return addressList.stream()
+                .map(address -> GetAddressListResponse.builder()
+                        .addressText(address.getAddressText())
+                        .postalCode(address.getPostalCode())
+                        .build())
+                .toList();
+    }
+
+    @Override
+    public GetAddressResponse getById(int id) {
+        Address address = addressRepository.findById(id).orElseThrow();
+        return GetAddressResponse.builder()
+                .addressText(address.getAddressText())
+                .postalCode(address.getPostalCode())
+                .build();
+    }
+
+    @Override
+    public GetAddressListResponse search(String addressText) {
+       return this.addressRepository.search(addressText);
+
+    }
+
 }

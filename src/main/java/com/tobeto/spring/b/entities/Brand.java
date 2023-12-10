@@ -23,8 +23,8 @@ public class Brand {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "brand") //attribute ismi
-    @JsonIgnore //bu alan jsona parse edilirken
+    @OneToMany(mappedBy = "brand")
+    @JsonIgnore
     private List<Car> cars;
 
 

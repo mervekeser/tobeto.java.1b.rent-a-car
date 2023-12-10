@@ -34,9 +34,6 @@ public class Address {
     @JoinColumn(name = "county_id")
     private County county;
 
-   /* @ManyToMany(mappedBy = "addresses")
-    private List<Customer> customers; */
-
     @OneToMany(mappedBy = "address")
     @JsonIgnore
     private List<Bill> bills;
