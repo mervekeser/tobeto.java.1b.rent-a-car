@@ -23,6 +23,10 @@ public class OrderManager implements OrderService {
 
     @Override
     public void add(AddOrderRequest addOrderRequest) {
+        LocalDate date = null;
+        if(orderRepository.existsByStartDateAndEndDate(addOrderRequest.getStartRent() == date, addOrderRequest.getEndRent() == date)){
+            throw new RuntimeException("Araç kiralama başlangıç ve bitiş tarihi boş geçilemez");
+        }
         Order order = new Order();
 
         order.setDate(addOrderRequest.getDate());

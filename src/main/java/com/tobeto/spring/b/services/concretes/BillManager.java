@@ -19,6 +19,7 @@ public class BillManager implements BillService {
 
     @Override
     public void add(AddBillRequest addBillRequest) {
+
         Bill bill = new Bill();
 
         bill.setDate(addBillRequest.getDate());

@@ -19,9 +19,15 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public void add(AddCustomerRequest addCustomerRequest) {
+        if(customerRepository.existsByIdentityNumberOrPhone(addCustomerRequest.getIdentityNumber(),addCustomerRequest.getPhone())){
+            throw new RuntimeException("Aynı Kimlik numarası ya da telefon numarası ile 2.müşteri olamaz");
+        }
+
         Customer customer = new Customer();
         customer.setName(addCustomerRequest.getName());
-
+        customer.setSurname(addCustomerRequest.getSurname());
+        customer.setIdentityNumber(addCustomerRequest.getIdentityNumber());
+        customer.setPhone(addCustomerRequest.getPhone());
         customerRepository.save(customer);
     }
 

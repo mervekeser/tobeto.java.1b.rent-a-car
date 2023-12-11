@@ -10,4 +10,5 @@ public interface AddressRepository extends JpaRepository <Address, Integer> {
             "WHERE a.addressText = :addressText")
     GetAddressListResponse search(String addressText);
 
+    boolean existsByAddressText(String addressText);
 }

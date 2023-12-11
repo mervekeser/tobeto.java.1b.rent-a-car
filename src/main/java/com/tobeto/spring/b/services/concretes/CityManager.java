@@ -23,7 +23,6 @@ public class CityManager implements CityService {
         City city = new City();
 
         city.setName(addCityRequest.getName());
-
         cityRepository.save(city);
     }
 

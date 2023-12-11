@@ -20,8 +20,8 @@ public class AddressManager implements AddressService {
 
     @Override
     public void add(AddAddressRequest addressRequest) {
-        Address address = new Address();
 
+        Address address = new Address();
         address.setPostalCode(addressRequest.getPostalCode());
         address.setAddressText(address.getAddressText());
 
